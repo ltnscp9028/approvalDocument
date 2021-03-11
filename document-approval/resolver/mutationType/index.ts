@@ -1,7 +1,7 @@
-import approval_history from './approval_history';
+import approvalHistory from './approvalHistory';
 import document from './document';
 import user from './user';
 
-const mutationType = { approval_history, document, user };
+const mutationType = { approvalHistory, document, user };
 
 export default mutationType;
