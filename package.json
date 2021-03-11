@@ -35,10 +35,11 @@
     "admin": "npx dotenv-cli -e .env -- npx prisma studio",
     "clean": "rm -rf ./build",
     "style": "prettier --write 'document/**/*'",
-    "dev:format":"npx prisma format",
+    "dev:format": "npx prisma format",
     "dev:migrate": "prisma migrate dev --preview-feature"
   },
   "devDependencies": {
+    "@types/jsonwebtoken": "^8.5.0",
     "@typescript-eslint/eslint-plugin": "^4.15.1",
     "@typescript-eslint/parser": "^4.15.1",
     "eslint": "^7.21.0",
