@@ -1,3 +1,7 @@
-const mutationType = {};
+import approvalHistory from './approvalHistory';
+import document from './document';
+import user from './user';
 
-export default mutationType;
+const queryType = { approvalHistory, document, user };
+
+export default queryType;
