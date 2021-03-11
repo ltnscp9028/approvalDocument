@@ -6,3 +6,28 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model user {
+  user_id       Int   @id   @default(autoincrement())
+  email         String @unique
+  name          String
+  outbox_document            document[] @relation("author")
+  inbox_document    document[] @relation("next_approver")
+  archive_document  document[]
+}
+
+model document {
+  document_id       Int   @id   @default(autoincrement())
+  author_id         Int
+  next_approvar_id  Int
+  author            user @relation("author",fields: [author_id], references:[user_id])
+  next_approver     user @relation("next_approver",fields: [next_approvar_id],references:[user_id])
+  approver_user     user[]
+  approval_status   ApprovalStatus  @default(DOING)
+}
+
+enum ApprovalStatus {
+  DOING
+  APPROVAL
+  REJECT
+}

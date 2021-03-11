@@ -34,7 +34,7 @@
     "admin": "npx dotenv-cli -e .env -- npx prisma studio",
     "clean": "rm -rf ./build",
     "style": "prettier --write 'document/**/*'",
-    "dev:migrate": "prisma migrate dev --preview-featurge"
+    "dev:migrate": "prisma migrate dev --preview-feature"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.15.1",
