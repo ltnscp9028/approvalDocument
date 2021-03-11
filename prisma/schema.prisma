@@ -21,6 +21,7 @@ model document {
   document_id       Int             @id   @default(autoincrement())
   author_id         Int
   next_approver_id  Int
+  document_content  Json
   author            user            @relation("author",fields: [author_id], references:[user_id])
   next_approver     user            @relation("next_approver",fields: [next_approver_id],references:[user_id])
   approver_user     user[]
