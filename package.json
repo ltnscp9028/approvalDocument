@@ -27,9 +27,9 @@
     "typescript": "^4.2.3"
   },
   "scripts": {
-    "dev": "npx ts-node-dev --transpile-only document/index.ts", 
-    "build": "yarn build:reflection && npx tsc",
-    "build:reflection": "cross-env NEXUS_SHOULD_EXIT_AFTER_REFLECTION=true npx ts-node --transpile-only ./document-approval/resolver/index.ts",
+    "dev": "yarn run generate:nexus && npx ts-node-dev --transpile-only document-approval/index.ts", 
+    "build": "yarn run generate:nexus && npx tsc",
+    "generate:nexus": "cross-env NEXUS_SHOULD_EXIT_AFTER_REFLECTION=true npx ts-node --transpile-only ./document-approval/resolver/index.ts",
     "start": "cross-env NODE_ENV=production node build/document-approval",
     "admin": "npx dotenv-cli -e .env -- npx prisma studio",
     "clean": "rm -rf ./build",
