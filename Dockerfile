@@ -14,8 +14,6 @@ RUN yarn global add pm2
 
 ENV NODE_ENV production
 
-RUN npx prisma generate
-
 RUN yarn run build
 
 EXPOSE 4000
