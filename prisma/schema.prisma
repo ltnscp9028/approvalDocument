@@ -8,22 +8,30 @@ datasource db {
 }
 
 model user {
-  user_id       Int   @id   @default(autoincrement())
-  email         String @unique
-  name          String
-  outbox_document            document[] @relation("author")
-  inbox_document    document[] @relation("next_approver")
+  user_id           Int         @id @default(autoincrement())
+  email             String      @unique
+  name              String
+  outbox_document   document[]  @relation("author")
+  inbox_document    document[]  @relation("next_approver")
   archive_document  document[]
+  approval_history  approval_history[]
 }
 
 model document {
-  document_id       Int   @id   @default(autoincrement())
+  document_id       Int             @id   @default(autoincrement())
   author_id         Int
-  next_approvar_id  Int
-  author            user @relation("author",fields: [author_id], references:[user_id])
-  next_approver     user @relation("next_approver",fields: [next_approvar_id],references:[user_id])
+  next_approver_id  Int
+  author            user            @relation("author",fields: [author_id], references:[user_id])
+  next_approver     user            @relation("next_approver",fields: [next_approver_id],references:[user_id])
   approver_user     user[]
   approval_status   ApprovalStatus  @default(DOING)
+}
+
+model approval_history {
+  approval_history_id   Int       @id
+  is_approval           Boolean
+  approver_id           Int
+  approver              user      @relation(fields: [approver_id],references:[user_id])
 }
 
 enum ApprovalStatus {

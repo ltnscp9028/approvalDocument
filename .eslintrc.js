@@ -30,5 +30,5 @@ module.exports = {
     node: true,
     es6: true,
   },
-  ignorePatterns: ['prisma/', 'node_modules/'],
+  ignorePatterns: ['node_modules/'],
 };
