@@ -1,4 +1,4 @@
-import approval_history from './approval_history';
+import approval_history from './approvalHistory';
 import document from './document';
 import user from './user';
 
