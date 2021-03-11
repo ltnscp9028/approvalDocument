@@ -34,6 +34,7 @@
     "admin": "npx dotenv-cli -e .env -- npx prisma studio",
     "clean": "rm -rf ./build",
     "style": "prettier --write 'document/**/*'",
+    "dev:format":"npx prisma format",
     "dev:migrate": "prisma migrate dev --preview-feature"
   },
   "devDependencies": {
