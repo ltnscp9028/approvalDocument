@@ -1,3 +1,7 @@
-const objectType = {};
+import approval_history from './approval_history';
+import document from './document';
+import user from './user';
 
-export default objectType;
+const mutationType = { approval_history, document, user };
+
+export default mutationType;
