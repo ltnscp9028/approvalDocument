@@ -7,7 +7,7 @@ import { createContext } from './context';
 
 const apollo = new ApolloServer({
   schema: schema,
-  context: createContext(),
+  context: ({ req, res }) => createContext({ req, res }),
   introspection: true,
   playground: true,
 });
