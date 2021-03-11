@@ -8,8 +8,8 @@ const user = objectType({
     t.model.name();
     t.model.outbox_document();
     t.model.inbox_document();
+    t.model.assigned_document();
     t.model.archive_document();
-    t.model.approval_history();
   },
 });
 

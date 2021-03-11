@@ -6,9 +6,11 @@ const document = objectType({
     t.model.document_id();
     t.model.author_id();
     t.model.next_approver_id();
+    t.model.document_content();
     t.model.author();
     t.model.next_approver();
     t.model.approver_user();
+    t.model.approval_history();
     t.model.approval_status();
   },
 });
