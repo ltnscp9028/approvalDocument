@@ -1,6 +1,6 @@
 import objectType from './objectType';
-import queryType from './query';
-import mutation from './mutation';
+import queryType from './queryType';
+import mutation from './mutationType';
 import { makeSchema } from 'nexus';
 import { nexusSchemaPrisma } from 'nexus-plugin-prisma/schema';
 import * as path from 'path';
@@ -29,7 +29,7 @@ export default makeSchema({
   },
   shouldExitAfterGenerateArtifacts: Boolean(process.env.NEXUS_SHOULD_EXIT_AFTER_REFLECTION),
   outputs: {
-    typegen: path.join(__dirname, '../../node_modules/@types/nexus-typegen/index.d.ts'),
+    typegen: path.join(__dirname, '../generated/nexus.ts'),
     schema: path.join(__dirname, '../generated/schema.graphql'),
   },
 });
