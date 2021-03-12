@@ -6,6 +6,8 @@ const document = objectType({
     t.model.document_id();
     t.model.author_id();
     t.model.next_approver_id();
+    t.model.document_title();
+    t.model.document_classification();
     t.model.document_content();
     t.model.author();
     t.model.next_approver();
