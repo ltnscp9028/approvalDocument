@@ -1,5 +1,5 @@
 import { nonNull, queryType, stringArg } from 'nexus';
-import { generateToken } from '../../generated/util/auth';
+import { generateToken } from '../../util/auth';
 
 const user = queryType({
   definition(t) {
