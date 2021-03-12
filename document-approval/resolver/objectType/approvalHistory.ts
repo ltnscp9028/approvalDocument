@@ -7,6 +7,7 @@ const approval_history = objectType({
     t.model.is_approval();
     t.model.approver_id();
     t.model.approval_document_id();
+    t.model.approval_comment();
     t.model.approver();
     t.model.document();
   },

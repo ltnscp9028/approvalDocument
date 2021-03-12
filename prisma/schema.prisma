@@ -36,6 +36,7 @@ model approval_history {
   is_approval          Boolean
   approver_id          Int
   approval_document_id Int
+  approval_comment     String?
   approver             user     @relation(fields: [approver_id], references: [user_id])
   document             document @relation(fields: [approval_document_id], references: [document_id])
 }
