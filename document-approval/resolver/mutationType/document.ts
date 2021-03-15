@@ -18,6 +18,11 @@ const document = extendType({
                 user_id: ctx.userInfo.user_id,
               },
             },
+            next_approver: {
+              connect: {
+                user_id: args.data.approver_list.user_id[0],
+              },
+            },
           },
         });
 
