@@ -13,7 +13,7 @@ model user {
   name             String
   outbox_document  document[]         @relation("author")
   inbox_document   document[]         @relation("next_approver")
-  archive_document document[]
+  archive_document document[]         @relation("involved_user")
   approval_history approval_history[]
 }
 
@@ -27,7 +27,7 @@ model document {
   author                  user               @relation("author", fields: [author_id], references: [user_id])
   next_approver           user?              @relation("next_approver", fields: [next_approver_id], references: [user_id])
   approver_list           Json
-  involved_user           user[]
+  involved_user           user[]             @relation("involved_user")
   approval_history        approval_history[]
   approval_status         ApprovalStatus     @default(DOING)
 }
@@ -38,6 +38,7 @@ model approval_history {
   approver_id          Int
   approval_document_id Int
   approval_comment     String?
+  approval_time        DateTime @default(now())
   approver             user     @relation(fields: [approver_id], references: [user_id])
   document             document @relation(fields: [approval_document_id], references: [document_id])
 }
