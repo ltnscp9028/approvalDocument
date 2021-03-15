@@ -6,10 +6,22 @@ const document = extendType({
   definition(t) {
     t.crud.createOnedocument({
       async resolve(root, args, ctx, info, originalResolve) {
-        args.data.involved_user = {
-          connect: [{ email: ctx.userInfo.email }],
-        };
-        return await originalResolve(root, args, ctx, info);
+        const document = await originalResolve(root, args, ctx, info);
+
+        const involved_author = await ctx.prisma.document.update({
+          where: {
+            document_id: Number(document.document_id),
+          },
+          data: {
+            involved_user: {
+              connect: {
+                user_id: ctx.userInfo.user_id,
+              },
+            },
+          },
+        });
+
+        return involved_author;
       },
     });
     t.crud.deleteOnedocument();
