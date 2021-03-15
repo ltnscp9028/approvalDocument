@@ -12,7 +12,7 @@ const document = objectType({
     t.model.author();
     t.model.next_approver();
     t.model.approver_list();
-    t.model.approver_user();
+    t.model.involved_user();
     t.model.approval_history();
     t.model.approval_status();
   },

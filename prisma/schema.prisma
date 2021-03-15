@@ -27,7 +27,7 @@ model document {
   author                  user               @relation("author", fields: [author_id], references: [user_id])
   next_approver           user?              @relation("next_approver", fields: [next_approver_id], references: [user_id])
   approver_list           Json
-  approver_user           user[]
+  involved_user           user[]
   approval_history        approval_history[]
   approval_status         ApprovalStatus     @default(DOING)
 }

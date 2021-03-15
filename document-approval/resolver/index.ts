@@ -13,6 +13,9 @@ export default makeSchema({
   plugins: [
     nexusSchemaPrisma({
       experimentalCRUD: true,
+      computedInputs: {
+        author: ({ ctx }) => ({ connect: { user_id: ctx?.userInfo?.user_id } }),
+      },
     }),
   ],
   contextType: {
