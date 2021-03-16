@@ -34,7 +34,7 @@ model document {
 }
 
 model approval_history {
-  approval_history_id  Int      @id
+  approval_history_id  Int      @id @default(autoincrement())
   is_approval          Boolean
   approver_id          Int
   approval_document_id Int
