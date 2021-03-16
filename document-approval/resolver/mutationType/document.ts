@@ -63,6 +63,7 @@ const document = extendType({
         for (let i = 0; i < approvalDocumentCount; i++) {
           const { approver_list, is_approval_list } = targetDocument[i];
           const remainApprovalCount = approver_list.length - is_approval_list.length - 1;
+          const isDone = remainApprovalCount === 0 || approvalStatusList[i] === false;
 
           const approvalPrismaQuery = prisma.document.update({
             where: { document_id: Number(approvalDocumentList[i]) },
@@ -73,12 +74,12 @@ const document = extendType({
                 },
               },
               next_approver: {
-                connect:
-                  remainApprovalCount === 0 || approvalStatusList[i] === false
-                    ? undefined
-                    : {
-                        user_id: approver_list[is_approval_list.length + 1],
-                      },
+                disconnect: isDone ? true : undefined,
+                connect: isDone
+                  ? undefined
+                  : {
+                      user_id: approver_list[is_approval_list.length + 1],
+                    },
               },
               approval_status:
                 approvalStatusList[i] === false

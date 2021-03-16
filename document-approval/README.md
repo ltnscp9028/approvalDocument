@@ -178,6 +178,7 @@
 >  }
 > } 
 > ```
+>* 문서 결재 쿼리
 > ```
 >mutation{
 >  approvalDocument(
