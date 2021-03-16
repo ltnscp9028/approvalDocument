@@ -1,11 +1,12 @@
 import objectType from './objectType';
 import queryType from './queryType';
 import mutationType from './mutationType';
+import inputObjectType from './inputObjectType';
 import { makeSchema } from 'nexus';
 import { nexusSchemaPrisma } from 'nexus-plugin-prisma/schema';
 import * as path from 'path';
 
-const type = [objectType, queryType, mutationType];
+const type = [objectType, inputObjectType, queryType, mutationType];
 
 console.log({ __dirname });
 export default makeSchema({
