@@ -43,7 +43,11 @@ const document = extendType({
       type: 'document',
       args: { approvalDocumentInput: nonNull(approvalDocumentInput) },
       async resolve(root, { approvalDocumentInput }, { prisma, userInfo }, info) {
-        const { approvalDocumentList, approvalStatusList } = approvalDocumentInput;
+        const {
+          approvalDocumentList,
+          approvalCommentList,
+          approvalStatusList,
+        } = approvalDocumentInput;
 
         const targetDocument = await prisma.document.findMany({
           where: {
@@ -58,12 +62,19 @@ const document = extendType({
         });
 
         const prismaTransactionArray = [];
+        const prismaHistoryTransctionArray = [];
         const approvalDocumentCount = targetDocument.length;
 
         for (let i = 0; i < approvalDocumentCount; i++) {
           const { approver_list, is_approval_list } = targetDocument[i];
           const remainApprovalCount = approver_list.length - is_approval_list.length - 1;
           const isDone = remainApprovalCount === 0 || approvalStatusList[i] === false;
+          const approvalStatus =
+            approvalStatusList[i] === false
+              ? 'REJECT'
+              : approvalStatusList[i] === true && remainApprovalCount === 0
+              ? 'APPROVAL'
+              : 'DOING';
 
           const approvalPrismaQuery = prisma.document.update({
             where: { document_id: Number(approvalDocumentList[i]) },
@@ -81,16 +92,23 @@ const document = extendType({
                       user_id: approver_list[is_approval_list.length + 1],
                     },
               },
-              approval_status:
-                approvalStatusList[i] === false
-                  ? 'REJECT'
-                  : approvalStatusList[i] === true && remainApprovalCount === 0
-                  ? 'APPROVAL'
-                  : 'DOING',
+              approval_status: approvalStatus,
             },
           });
+
+          const approvalHistoryQuery = prisma.approval_history.create({
+            data: {
+              approval_comment: approvalCommentList[i],
+              approver_id: userInfo?.user_id,
+              approval_document_id: Number(approvalDocumentList[i]),
+              is_approval: Boolean(approvalStatusList[i]),
+            },
+          });
+
           prismaTransactionArray.push(approvalPrismaQuery);
+          prismaHistoryTransctionArray.push(approvalHistoryQuery);
         }
+        await prisma.$transaction(prismaHistoryTransctionArray);
         return await prisma.$transaction(prismaTransactionArray);
       },
     });
