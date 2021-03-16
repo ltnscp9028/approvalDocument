@@ -1,5 +1,6 @@
-import { extendType } from 'nexus';
-import { resolve } from 'node:path';
+import { document } from '.prisma/client';
+import { extendType, intArg, list, nonNull } from 'nexus';
+import approvalDocumentInput from '../inputObjectType/approvalDocumentInput';
 
 const document = extendType({
   type: 'Mutation',
@@ -7,6 +8,7 @@ const document = extendType({
     t.crud.createOnedocument({
       async resolve(root, args, ctx, info, originalResolve) {
         const document = await originalResolve(root, args, ctx, info);
+        const approver_list: number[] = Object(document.approver_list);
 
         const involved_author = await ctx.prisma.document.update({
           where: {
@@ -20,8 +22,11 @@ const document = extendType({
             },
             next_approver: {
               connect: {
-                user_id: args.data.approver_list.user_id[0],
+                user_id: approver_list[0],
               },
+            },
+            is_approval_list: {
+              set: [],
             },
           },
         });
@@ -34,6 +39,60 @@ const document = extendType({
     t.crud.updateOnedocument();
     t.crud.updateManydocument();
     t.crud.upsertOnedocument();
+    t.list.field('approvalDocument', {
+      type: 'document',
+      args: { approvalDocumentInput: nonNull(approvalDocumentInput) },
+      async resolve(root, { approvalDocumentInput }, { prisma, userInfo }, info) {
+        const { approvalDocumentList, approvalStatusList } = approvalDocumentInput;
+
+        const targetDocument = await prisma.document.findMany({
+          where: {
+            document_id: {
+              in: approvalDocumentList as number[],
+            },
+            next_approver_id: userInfo.user_id,
+          },
+          include: {
+            involved_user: true,
+          },
+        });
+
+        const prismaTransactionArray = [];
+        const approvalDocumentCount = targetDocument.length;
+
+        for (let i = 0; i < approvalDocumentCount; i++) {
+          const { approver_list, is_approval_list } = targetDocument[i];
+          const remainApprovalCount = approver_list.length - is_approval_list.length - 1;
+
+          const approvalPrismaQuery = prisma.document.update({
+            where: { document_id: Number(approvalDocumentList[i]) },
+            data: {
+              involved_user: {
+                connect: {
+                  user_id: userInfo.user_id,
+                },
+              },
+              next_approver: {
+                connect:
+                  remainApprovalCount === 0 || approvalStatusList[i] === false
+                    ? undefined
+                    : {
+                        user_id: approver_list[is_approval_list.length + 1],
+                      },
+              },
+              approval_status:
+                approvalStatusList[i] === false
+                  ? 'REJECT'
+                  : approvalStatusList[i] === true && remainApprovalCount === 0
+                  ? 'APPROVAL'
+                  : 'DOING',
+            },
+          });
+          prismaTransactionArray.push(approvalPrismaQuery);
+        }
+        return await prisma.$transaction(prismaTransactionArray);
+      },
+    });
   },
 });
 
