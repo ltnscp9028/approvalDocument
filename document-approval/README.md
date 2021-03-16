@@ -15,6 +15,7 @@
 >   * ```approvalCommentList: string[]``` : 문서별 코멘트 여부(코멘트 하지 않을 경우 null로 채워야함)
 >   * 위의 array들은 동일한 length를 가져야함
 > * 위의 유저별 목록 조회로 돌아가 정상적으로 반영되었는지 확인
+> * Approval History 조회
 
 ## 2. 예제 쿼리
 > * 유저 3명 생성 쿼리
@@ -194,3 +195,17 @@
 >}
 >```
 >* 다시 전체문서 조회쿼리 실행 후 결과 확인
+>* approval History 확인
+>```
+>query{
+>  approvalHistories{
+>    approval_history_id
+>    approval_comment
+>    is_approval
+>    approver{
+>      email
+>      name
+>    }
+>  }
+>}
+>```
