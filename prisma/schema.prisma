@@ -26,7 +26,8 @@ model document {
   document_content        String
   author                  user               @relation("author", fields: [author_id], references: [user_id])
   next_approver           user?              @relation("next_approver", fields: [next_approver_id], references: [user_id])
-  approver_list           Json
+  approver_list           Int[]
+  is_approval_list        Boolean[]
   involved_user           user[]             @relation("involved_user")
   approval_history        approval_history[]
   approval_status         ApprovalStatus     @default(DOING)
