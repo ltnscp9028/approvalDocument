@@ -8,7 +8,7 @@
 >   * ```document_content:string``` : 내용
 >   * ```approver_list:{ set:${ user_id[] } }``` : 결재자 목록
 > * 전체 유저별 목록조회
->   * 로그인한 유저만 조회하는 경우 ```users``` -> ```user```
+>   * 로그인한 유저만 조회하는 경우 ```users``` -> ```user(email:string)```
 > * approvalDocument mutation을 이용하여 문서 승인 (이하 ```approvalDocumentInput```의 arguments들)
 >   * ```approvalDocumentList: documentId[]``` : 승인하고자 하는 문서목록
 >   * ```approvalStatusList: boolean[]``` : 문서별 승인여부
