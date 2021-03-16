@@ -1,5 +1,5 @@
 import { document } from '.prisma/client';
-import { extendType, intArg, list, nonNull } from 'nexus';
+import { extendType, nonNull } from 'nexus';
 import approvalDocumentInput from '../inputObjectType/approvalDocumentInput';
 
 const document = extendType({
