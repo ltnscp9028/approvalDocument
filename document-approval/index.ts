@@ -16,4 +16,5 @@ apollo.applyMiddleware({ app });
 
 app.listen(process.env.PORT, () => {
   console.log(`Document Server Start : PORT: ${process.env.PORT}`);
+  console.log('!');
 });
