@@ -20,7 +20,7 @@ export default makeSchema({
     }),
   ],
   contextType: {
-    module: path.join(__dirname, '../context.ts'),
+    module: require.resolve('../context'),
     export: 'Context',
   },
   sourceTypes: {
@@ -33,7 +33,7 @@ export default makeSchema({
   },
   shouldExitAfterGenerateArtifacts: Boolean(process.env.NEXUS_SHOULD_EXIT_AFTER_REFLECTION),
   outputs: {
-    typegen: path.join(__dirname, '../generated/nexus.ts'),
+    typegen: path.join(__dirname, '../generated/typegen-nexus-plugin-prisma.d.ts'),
     schema: path.join(__dirname, '../generated/schema.graphql'),
   },
 });

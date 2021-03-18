@@ -27,7 +27,7 @@
     "typescript": "^4.2.3"
   },
   "scripts": {
-    "dev": "yarn run generate:nexus && npx ts-node-dev --transpile-only document-approval/index.ts",
+    "dev": "npx ts-node-dev -T document-approval/index.ts",
     "build": "yarn run generate:nexus && npx tsc",
     "generate:nexus": "cross-env NEXUS_SHOULD_EXIT_AFTER_REFLECTION=true npx ts-node --transpile-only ./document-approval/resolver/index.ts",
     "generate:prisma": "npx prisma generate",
