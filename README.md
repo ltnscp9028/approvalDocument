@@ -21,7 +21,7 @@
 > * 유저 3명 생성 쿼리
 > ```
 > mutation{
->  createOneuser(data:{email:"job@croquis.com",name:"다이앤"}){
+>  createOneuser(data:{email:"developer@google.com",name:"개발자"}){
 >    user_id
 >    email
 >    name
@@ -30,7 +30,7 @@
 >```
 > ```
 > mutation{
->  createOneuser(data:{email:"ltnscp9028@gmail.com",name:"한상진"}){
+>  createOneuser(data:{email:"designer@gmail.com",name:"디자이너"}){
 >    user_id
 >    email
 >    name
@@ -39,7 +39,7 @@
 >```
 > ```
 > mutation{
->  createOneuser(data:{email:"ADMIN@croquis.com",name:"크로키닷컴"}){
+>  createOneuser(data:{email:"pm@gmail.com",name:"PM"}){
 >    user_id
 >    email
 >    name
@@ -62,9 +62,9 @@
 >```
 >mutation{
 >  createOnedocument(data:{
->      document_title:"한상진 - 지그재그 과제",
->      document_classification:"job",
->      document_content:"document-Approval 과제",
+>      document_title:"PM - 기획문서",
+>      document_classification:"plan",
+>      document_content:"PM - 기획문서",
 >    	approver_list:{
 >        set:[1]
 >      }
@@ -89,9 +89,9 @@
 >```
 >mutation{
 >  createOnedocument(data:{
->      document_title:"지그재그 - 코드리뷰",
->      document_classification:"recruit",
->      document_content:"한상진님 코드리뷰",
+>      document_title:"디자인 시안",
+>      document_classification:"design",
+>      document_content:"figma",
 >    	approver_list:{
 >        set:[1,2,3]
 >      }
@@ -116,9 +116,9 @@
 >```
 >mutation{
 >  createOnedocument(data:{
->      document_title:"면접 날짜 정하기",
->      document_classification:"schedule",
->      document_content:"한상진님 면접일자",
+>      document_title:"코드리뷰",
+>      document_classification:"code-review",
+>      document_content:"+2Days PR",
 >    	approver_list:{
 >        set:[1,2]
 >      }
